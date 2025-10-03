@@ -4,7 +4,7 @@
 Ce dépôt contient le rapport du projet **Support Vector Machines (SVM)** ainsi que les codes Python utilisés pour les expérimentations.
 
 
-Auteurs
+Auteurs :
 
 Kader SAWADOGO
 
