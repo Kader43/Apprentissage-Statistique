@@ -1,7 +1,6 @@
 \documentclass{rapport}
 \usepackage{hyperref}
 \usepackage{lipsum}
-\usepackage{gensymb}
 \usepackage{float}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -23,8 +22,8 @@
 
 \logo{logos/Logomtp.png}
 \uni{\textbf{Université de Montpellier}\\ Faculté des Sciences\\ M2 SSD}
-\ttitle{Apprentissage statistique} 
-\subject{} 
+\ttitle{Apprentissage statistique\\} 
+\subject{Support Vecteurs Machines (SVM)}
 
 \professor{ \textsc{BILEL} Said} 
 \students{  \textsc{DIALLO} Ousmane\\
@@ -34,7 +33,6 @@
 %----------- Init -------------------
 
 \buildmargins
-\renewcommand{\reportname}{Support vecteurs machines}
 \buildcover 
 \toc 
 
@@ -42,6 +40,30 @@
 %------------ Report body ---------------
 
 \newpage
+
+\section*{Introduction}
+
+Les machines à vecteurs de support (SVM, Support Vector Machines) constituent une
+famille de méthodes d’apprentissage supervisé particulièrement utilisées pour les tâches
+de classification. Introduites par Vapnik dans les années 1990, elles reposent sur la
+construction d’un hyperplan de séparation qui maximise la marge entre deux classes,
+c’est-à-dire la distance entre les observations les plus proches de la frontière de décision,
+appelées vecteurs de support.  
+
+L’intérêt majeur des SVM réside dans leur flexibilité : grâce au \emph{kernel trick}, il est
+possible de projeter les données dans un espace de dimension plus élevée où elles sont
+potentiellement séparables de manière linéaire. Le choix du noyau (linéaire, polynomial,
+RBF, etc.) et des paramètres de régularisation (comme $C$ ou $\gamma$) joue donc un rôle
+essentiel dans la performance du modèle et sa capacité de généralisation.  
+
+Ce rapport a pour objectif de mettre en pratique ces notions à travers plusieurs
+expériences. Nous commencerons par une classification binaire sur le jeu de données
+\emph{Iris} en utilisant des noyaux linéaire et polynomial, puis nous analyserons l’impact
+du paramètre de régularisation $C$ ainsi que les problèmes liés aux données déséquilibrées.
+Nous étudierons ensuite la dégradation des performances lorsqu’on ajoute des variables
+non pertinentes, avant de montrer comment une réduction de dimension par analyse en
+composantes principales (PCA) peut améliorer la généralisation. Enfin, nous discuterons
+du biais introduit lors du prétraitement des données.  
 
 
 
@@ -54,7 +76,7 @@ La figure \ref{fig:placeholder1} ci-dessous illustre le nuage de points des deux
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\linewidth]{nuageiris.png}
+    \includegraphics[width=0.9\linewidth]{logos/nuageiris.png}
     \caption{Nuage de points avec frontière de séparation des deux classes}
     \label{fig:placeholder1}
 \end{figure}
@@ -67,19 +89,22 @@ On constate que la séparation obtenue n’est pas parfaite : la frontière lin�
 
 \subsection{SVM basé sur le noyau polynomial}
 
-Lors de l’utilisation d’un \textit{SVM} avec noyau polynomial, nous obtenons les hyperparamètres suivants : C = 0.0316, \text{degré} = 1 et \gamma = 10.
+Lors de l’utilisation d’un \textit{SVM} avec noyau polynomial, nous obtenons les hyperparamètres suivants : $C = 0.0316$, $\text{degré} = 1$ et $\gamma = 10$.
 
-Les performances obtenues sont : \text{Score apprentissage} \approx  75\%, \quad 
-\text{Score test} \approx 68\%.
+Les performances obtenues sont :
+$\text{Score apprentissage} \approx 75\%, \quad
+ \text{Score test} \approx 68\%.$
+
+La frontière de séparation obtenue est illustrée dans la figure ci-dessous.
 
 
 
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.45\linewidth]{frontiere.png}
+    \includegraphics[width=0.45\linewidth]{logos/frontiere.png}
     \caption{Frontière de séparation à l’aide du noyau polynomial}
-    \label{fig:placeholder}
+    \label{fig:placeholdeer}
 \end{figure}
 
 
@@ -95,12 +120,12 @@ Voici la représentation graphique d’un jeu de données déséquilibré (90/10
     \centering
     \begin{minipage}{0.47\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{1.PNG}
+        \includegraphics[width=\linewidth]{logos/1.PNG}
         \caption*{C=1}
     \end{minipage}\hfill
     \begin{minipage}{0.47\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{2.PNG}
+        \includegraphics[width=\linewidth]{logos/2.PNG}
         \caption*{C=0.001}
     \end{minipage}\hfill
     \caption{Impact du choix de noyau et le paramètre}
@@ -121,9 +146,9 @@ La précision globale peut sembler correcte (environ 90~\%), mais elle est tromp
 \section{Analyse de la régularisation avec le paramètre C}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.75\linewidth]{output.png}
+    \includegraphics[width=0.75\linewidth]{logos/output.png}
     \caption{Erreur de prédiction en fonction du paramètre C}
-    \label{fig:placeholder}
+    \label{fig:placeholderz}
 \end{figure}
 
 
@@ -137,7 +162,7 @@ Dès que $C$ augmente (à partir de $10^{-4}$), l’erreur chute brutalement et 
 \centering
 \begin{tabular}{|c|c|c|}
 \hline
-\textbf{Nb. de variables de nuisance} & \textbf{Score test sans nuisance} & \textbf{Score test avec nuisance} \\ \hline
+\textbf{Nb. de variables de nuisance} & \textbf{SCORE sans nuisance} & \textbf{Score avec nuisance} \\ \hline
 0   & 0.916 & 0.563 \\ \hline
 10  & 0.900 & 0.511 \\ \hline
 20  & 0.863 & 0.500 \\ \hline
@@ -182,6 +207,39 @@ Ainsi, la réduction de dimension par PCA illustre bien le compromis biais/varia
 \section{Biais introduit lors du prétraitement des données}
 
 Le biais vient du fait qu'on standardise les donnéees sur l'ensemble complet(train/test) avant la separation, ce qui introduit une fuite d'information surestime la performances.
+
+
+\section*{Conclusion}
+
+Au terme de ce travail, nous avons pu expérimenter les principales caractéristiques
+des machines à vecteurs de support (SVM) et analyser leur comportement selon
+différents contextes. L’étude sur le jeu de données \emph{Iris} a montré les limites
+d’une séparation linéaire lorsque les variables utilisées ne permettent pas une bonne
+discrimination des classes. L’utilisation d’un noyau polynomial n’a pas apporté
+d’amélioration significative dans ce cas précis, confirmant que le choix du noyau
+doit être adapté à la structure des données.  
+
+L’analyse de la régularisation via le paramètre $C$ a mis en évidence le compromis
+entre complexité du modèle et capacité de généralisation : une valeur trop faible
+conduit à un sous-apprentissage tandis qu’une valeur trop élevée entraîne un
+sur-apprentissage. De plus, dans un contexte de classes déséquilibrées, le modèle
+a tendance à privilégier la classe majoritaire, ce qui souligne la nécessité de
+méthodes correctives comme la pondération des classes.  
+
+Nous avons également observé que l’ajout de variables non pertinentes dégrade
+fortement la performance du SVM, qui devient alors proche d’un comportement
+aléatoire. À l’inverse, la réduction de dimension par PCA a permis d’améliorer
+la généralisation, en trouvant un équilibre entre préservation de l’information
+et limitation du bruit. Enfin, nous avons identifié l’importance d’un bon
+prétraitement : une normalisation réalisée avant la séparation apprentissage/test
+introduit un biais qui surestime artificiellement les performances.  
+
+Ainsi, ce travail met en évidence la puissance et la robustesse des SVM, mais
+aussi leur sensibilité aux choix des hyperparamètres, à la qualité des variables
+et aux bonnes pratiques de prétraitement. Leur utilisation efficace nécessite
+donc une compréhension fine des données et des techniques d’optimisation
+associées.
+
 
 \newpage
 
