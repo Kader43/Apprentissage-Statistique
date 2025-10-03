@@ -1,30 +1,60 @@
-# Apprentissage Statistique – Projet SVM
-Auteurs: Ousmane Mama Diallo & SAWADOGO Abdoul 
 
-## 📄 Compilation du rapport (LaTeX)
+# Apprentissage Statistique – Rapport & Codes
 
-Pour compiler le rapport, vous devez disposer des fichiers suivants :
+Ce dépôt contient le rapport du projet **Support Vector Machines (SVM)** ainsi que les codes Python utilisés pour les expérimentations.
 
-- **`rapport.cls`** : fichier de classe LaTeX, à télécharger depuis Overleaf.  
-- **`logos/`** : dossier contenant les images (logos), également à télécharger depuis Overleaf.  
+---
 
-Placez ces éléments à la racine du projet avant de lancer la compilation.  
+## 📂 Contenu du dépôt
+- `tpSVM.tex` → fichier principal du rapport LaTeX  
+- `rapport.cls` → fichier de classe LaTeX personnalisé  
+- `logos/` → dossier contenant les images et logos utilisés dans le rapport  
+- `*.py` → scripts Python pour les expériences (SVM, PCA, etc.)  
 
-### Commande de compilation (Linux/Mac/Windows avec LaTeX installé) :
-```bash
-pdflatex main.tex
+---
+
+## 🖋️ Rapport LaTeX
+
+### Compilation locale
+Pour compiler le rapport en PDF avec **VS Code** ou en terminal :
+
+1. Installer une distribution **LaTeX complète** :
+   - **Ubuntu/Debian** :  
+     ```bash
+     sudo apt install texlive-full
+     ```
+   - **Windows** : installer [MiKTeX](https://miktex.org/download)  
+   - **MacOS** : installer [MacTeX](https://tug.org/mactex/)  
+
+2. Compiler avec `latexmk` :  
+   ```bash
+   latexmk -pdf tpSVM.tex
 
 
-## Packages Python nécessaires
+Dépendances
 
-Pour exécuter les codes Python, assurez-vous d’avoir installé les packages suivants :
+Les scripts Python nécessitent les packages suivants :
 
-- numpy  
-- matplotlib  
-- scikit-learn  
 
-Ces packages couvrent toutes les fonctionnalités utilisées (SVM, PCA, normalisation, jeux de données, visualisation, etc.).
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn import svm, datasets
+from sklearn.utils import shuffle
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.datasets import fetch_lfw_people
+from sklearn.decomposition import PCA
+from time import time
+import warnings
 
-### Installation (via pip)
-```bash
+Installation
+
+Créer un environnement virtuel et installer les dépendances :
+
+python -m venv venv
+source venv/bin/activate   # Linux/Mac
+venv\Scripts\activate      # Windows
+
 pip install numpy matplotlib scikit-learn
+
