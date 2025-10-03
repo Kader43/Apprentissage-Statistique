@@ -35,7 +35,7 @@ Dépendances
 
 Les scripts Python nécessitent les packages suivants :
 
-
+---
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
@@ -47,14 +47,14 @@ from sklearn.datasets import fetch_lfw_people
 from sklearn.decomposition import PCA
 from time import time
 import warnings
-
+---
 Installation
 
 Créer un environnement virtuel et installer les dépendances :
-
+---
 python -m venv venv
 source venv/bin/activate   # Linux/Mac
 venv\Scripts\activate      # Windows
-
+---
 pip install numpy matplotlib scikit-learn
 
